@@ -1,0 +1,22 @@
+{
+  "name": "attio-merlin-proxy",
+  "version": "1.0.0",
+  "description": "OpenAI-compatible API gateway for Attio Merlin (Ask Attio) with account pool and scope-gate fallback routing",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "attio",
+    "merlin",
+    "openai-compatible",
+    "proxy",
+    "gateway",
+    "crm"
+  ],
+  "license": "MIT"
+}
