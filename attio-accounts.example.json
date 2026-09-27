@@ -1,0 +1,11 @@
+{
+  "accounts": [
+    {
+      "name": "acct-1",
+      "cookie": "attio-session=PASTE_COOKIE_HERE; attio-app-session=PASTE_COOKIE_HERE",
+      "slug": "your-workspace-slug",
+      "email": "you@example.com",
+      "enabled": true
+    }
+  ]
+}
