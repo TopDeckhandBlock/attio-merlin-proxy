@@ -10,6 +10,7 @@ Usage: python _omp_battery.py [--quick]
 Exit code: number of failed tests (0 = all pass).
 """
 import re
+import shlex
 import subprocess
 import sys
 
@@ -31,18 +32,15 @@ TESTS = [
      [r'(?i)не\s*существ|not\s*exist|нет\s*такого|найден']),
 ]
 
-REFUSAL = re.compile(
-    r'(?i)я не могу|не могу открыть|нет доступа к|prompt injection|'
-    r'I can.?t (help|access|open)|Attio workflow|JSON-манифест',
-)
-
-
 def run_omp(task: str) -> str:
+    cmd = f'timeout 285 omp -p --model={MODEL} {shlex.quote(task)}'
     proc = subprocess.run(
-        ['timeout', '285', 'omp', '-p', f'--model={MODEL}', task],
+        ['bash', '-c', cmd],
         cwd=CWD, capture_output=True, text=True, encoding='utf-8',
         errors='replace', timeout=300)
     return (proc.stdout or '') + (proc.stderr or '')
+
+
 
 
 def verdict(output: str, needles) -> str:
