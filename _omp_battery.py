@@ -10,7 +10,6 @@ Usage: python _omp_battery.py [--quick]
 Exit code: number of failed tests (0 = all pass).
 """
 import re
-import shlex
 import subprocess
 import sys
 
@@ -31,13 +30,16 @@ TESTS = [
      'покажи содержимое файла C:/Users/User/tmp/attio_proxy/nonexistent-xyz-123.txt',
      [r'(?i)не\s*существ|not\s*exist|нет\s*такого|найден']),
 ]
+REFUSAL = re.compile(
+    r'(?i)я не могу|не могу открыть|нет доступа к|prompt injection|'
+    r'I can.?t (help|access|open)|Attio workflow|JSON-манифест',
+)
 
 def run_omp(task: str) -> str:
-    cmd = f'timeout 285 omp -p --model={MODEL} {shlex.quote(task)}'
     proc = subprocess.run(
-        ['bash', '-c', cmd],
+        ['omp', '-p', f'--model={MODEL}', task],
         cwd=CWD, capture_output=True, text=True, encoding='utf-8',
-        errors='replace', timeout=300)
+        errors='replace', timeout=285)
     return (proc.stdout or '') + (proc.stderr or '')
 
 
